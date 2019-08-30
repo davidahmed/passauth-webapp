@@ -8,7 +8,7 @@ Progress:
 |  Frontend - all pages    |  <ul><li>- [x] done</li></ul> |   high       |  
 |  Frontend - CSS and Desgin    | <ul><li>- [x] done</li></ul> |     high     | 
 |  Frontend - subtask - image selectors-jquery   |  <ul><li>- [ ] pending</li></ul>  |  low        | 
-| Backend - serve static pages |  <ul><li>- [ ] pending</li></ul>  | high |
+| Backend - serve static pages |  <ul><li>- [x] pending</li></ul>  | high |
 | Backend - database |  <ul><li>- [ ] pending</li></ul>  | high |
 | Backend - session management |  <ul><li>- [ ] pending</li></ul>  | high |
 | Backend - session management |  <ul><li>- [ ] pending</li></ul>  | medium |
