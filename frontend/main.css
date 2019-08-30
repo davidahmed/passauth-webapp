@@ -1,0 +1,62 @@
+body {
+    padding-bottom: 3rem;
+    font-size: 0.9rem;
+}
+
+p {
+    margin:1rem;
+}
+
+.colored-body {
+    background: #eeeeee;
+}
+
+.jumbotron {
+    margin-left:-1rem;
+    margin-right: -1rem;
+    padding-top: 1rem;
+    background: #111111;
+    padding-bottom:1rem;
+    padding-left:2rem;
+    color: white;
+}
+
+.box-shadow--8dp {
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 
+                0 3px 14px 2px rgba(0, 0, 0, .12), 
+                0 5px 5px -3px rgba(0, 0, 0, .2)
+}
+
+.custom-header-font {
+    font-family: "Helvetica Neue"; 
+    align-content: normal; 
+    font-variant: normal; 
+    font-weight: 400; 
+    letter-spacing: 1px;
+}
+
+.custom-font {
+    font-family: "Helvetica Neue"; 
+    align-content: normal; 
+    font-variant: normal; 
+    font-weight: 400; 
+}
+
+.top-bottom-buffer { 
+    margin-top: 5rem; 
+    margin-bottom: 5rem;
+    border-radius: 102px;
+}
+
+.form-card{
+    background: white;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.sleek-spacing{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+
