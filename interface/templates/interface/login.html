@@ -1,4 +1,5 @@
 {% extends "interface/header.html" %}
+{% load staticfiles %}
 {% block content %}
   <body class="colored-body">
 
@@ -12,20 +13,20 @@
     <div class="row top-bottom-buffer">
         <div class="col"></div>
         
-        <div class="col-5 col-lg-3 card form-card">
-            <form>
+        <div class="col-5 col-lg-3 card form-card" onsubmit="printLogs(); return false;">
+            <div autocomplete="off" id="login-form">
+                {% csrf_token %}
               <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <label for="inputUsername">Username</label>
+                <input type="text" name="un" class="form-control" id="inputUsername" autocomplete="off" placeholder="Enter username" >
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <label for="inputPassword">Password</label>
+                <input name="pass" type="text" class="form-control hidden-field" id="inputPassword" autocomplete="off" placeholder="Password" >
               </div>
-              <button type="submit" class="btn btn-danger btn-block box-shadow--8dp" formaction="choices">Submit</button>
+              <input type="button" id="submitButton" class="btn btn-danger btn-block box-shadow--8dp"  value="Submit" onclick="printLogs(); return false;" >
                 
-            </form>  
+            </div>
         </div>
         
         <div class="col"></div>
@@ -38,12 +39,14 @@
 
         <p>2. Username and password fields have to be typed in everytime you log in. Only typed usernames and passwords will be accepted as valid. Saving passwords and using password managers will automatically be rejected- please refrain from using them on this website.</p>
     </div>
-    
-      
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
+    <script src="{% static 'interface/login.js' %}"></script>
+
+    </body>
 {% endblock %}

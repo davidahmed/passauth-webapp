@@ -59,4 +59,9 @@ p {
     margin-bottom: 0.5rem;
 }
 
+.hidden-field{
+   text-security: circle; /* IE/Safari */
+   -moz-text-security: circle; /* FireFox */
+   -webkit-text-security: circle; /* Chrome/Safari  */
 
+}

@@ -14,6 +14,11 @@
       <link rel="stylesheet" href="{% static 'interface/main.css' %}">
 
     <title>PassAuth</title>
+
+    <script>
+
+      window.csrftoken="{{ csrftoken }}";
+    </script>
   </head>
 
     {% block content %}
