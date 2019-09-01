@@ -12,9 +12,16 @@
 
     <div class="row">
         <div class="col border-right pt-3 d-flex flex-column col-3 col-xl-4">
-            <div class="pl-4">Hello, USERNAME!</div>
-            <div class="pl-4">Session Count: NUMBER</div>
-            <div class="pl-4">Successful Participation Key: FILLER</div>
+            <div class="pl-4">Hello, <span class="font-weight-bold">{{ username }}!</span></div>
+            <br>
+            <div class="pl-4">Session Count: <span class="font-weight-bold">{{ session_count }}</span></div>
+            <br>
+            <div class="pl-4">Successful Participation Key: {% if spk %}
+                                                            {{ spk }} can be used as a valid key to redeem for your subsistence allowance.
+                                                            {% else %}
+                                                            SPK will be generated automatically onces you have completed at least 20 sessions.
+                                                            {% endif %}
+            </div>
         </div>
         <div class="col col-8 col-lg-7 col-xl-6 pt-3">
             <p class="font-weight-bold">Please select two pictures of your choice and click 'Submit'</p>

@@ -20,8 +20,9 @@ def index(request):
 
 def consent(request):
     if request.session.get('consent', False):
+        request.session['consent'] = True
         return redirect('login')
-    request.session['consent'] = True
+
 
     template = loader.get_template('interface/consent.html')
     return HttpResponse(template.render())
@@ -45,8 +46,13 @@ def login(request):
                 'headers': request.headers,
             }):
                 sessionCount = users.get_user_session(username, increment=True)
-
-            return render(request, 'interface/choices.html', {'username': 'dave'})
+            assert sessionCount > 0, 'Fatal: session is not incrementing'
+            spk = users.user_md5(username) if sessionCount >= 20 else ""
+            random.shuffle(images)
+            return render(request, 'interface/choices.html', {'username': username,
+                                                                'session_count': sessionCount,
+                                                                'spk': spk,
+                                                                'images': images[0:6]})
         else:
             return render(request, 'interface/login.html', {'login_error':True})
     return render(request, 'interface/login.html')
@@ -69,6 +75,7 @@ def signup(request):
             if validation[0] == False:
                 return render(request, 'interface/signup.html', {'signup_error':validation[1]})
             else:
+                users.register_user(username, password)
                 return render(request, 'interface/signup.html', {'signup_valid': True})
 
     return render(request, 'interface/signup.html')
