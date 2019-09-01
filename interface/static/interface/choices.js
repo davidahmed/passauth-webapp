@@ -7,7 +7,7 @@ $(document).ready(function() {
       );
         setTimeout(function(){
             window.location.replace('success');
-        },2000);
+        },1000);
        
     });
 });

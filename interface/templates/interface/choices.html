@@ -17,7 +17,7 @@
             <div class="pl-4">Session Count: <span class="font-weight-bold">{{ session_count }}</span></div>
             <br>
             <div class="pl-4">Successful Participation Key: {% if spk %}
-                                                            {{ spk }} can be used as a valid key to redeem for your subsistence allowance.
+                                                            <span class="font-weight-bold">{{ spk }}</span> can be used as a valid key to redeem for your subsistence allowance.
                                                             {% else %}
                                                             SPK will be generated automatically onces you have completed at least 20 sessions.
                                                             {% endif %}
