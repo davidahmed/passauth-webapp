@@ -6,6 +6,9 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 
+from .db import MongoDBConnection
+from . import users
+
 from django.http import HttpResponse
 
 images = ["img/"+str(i)+'_tn.jpg' for i in range(1, 17)]
@@ -32,7 +35,7 @@ def login(request):
         print(request.__dict__)
         #Also save raw logs as well.
 
-        if request.POST.get('un', "") == 'dave':
+        if users.user_exists(request.POST.get('un', "")):
             return redirect('success')
     return render(request, 'interface/login.html')
 

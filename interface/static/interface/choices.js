@@ -6,7 +6,7 @@ $(document).ready(function() {
       $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...'
       );
         setTimeout(function(){
-            window.location.replace('end.html');
+            window.location.replace('end');
         },2000);
        
     });
