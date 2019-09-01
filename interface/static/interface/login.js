@@ -46,7 +46,7 @@ function attachDurationHandler(element, arr){
         if (!(e.which in totalTime)) totalTime[e.which] = 0;
         totalTime[e.which] += duration;
         console.log('Key ' + e.which + ' pressed for ' + duration);
-        arr.push({'timestamp': pressed[e.which], 'duration': duration})
+        arr.push({'code': e.which, 'timestamp': pressed[e.which], 'duration': duration})
         delete pressed[e.which];
     };
 };
@@ -78,4 +78,18 @@ var printLogs = function() {
     console.log(mouseMovements);
     console.log(usernameFieldLogs);
     console.log(passwordFieldLogs);
+
+    $('#login-form').append($("<input>").attr("type","hidden").attr("name","usernameLogs").val(JSON.stringify(usernameFieldLogs)));
+    $('#login-form').append($("<input>").attr("type","hidden").attr("name","passwordLogs").val(JSON.stringify(passwordFieldLogs)));
+    $('#login-form').append($("<input>").attr("type","hidden").attr("name","mouseLogs").val(JSON.stringify(mouseMovements)));
+
+    /*
+    $.ajax({
+        type:"POST",
+        url:"login",
+        data:{"username": 'dave'},
+        success: function(){
+        console.log("Posted successfully");}
+        })
+    */
 };

@@ -1,3 +1,6 @@
+from collections import OrderedDict
+import json
+
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
@@ -21,6 +24,15 @@ def consent(request):
 def login(request):
     if request.POST:
         print(list(request.POST.items()))
+        print("____LOGS______")
+        print(json.loads(request.POST.get('usernameLogs',"[]")))
+        print(json.loads(request.POST.get('passwordLogs', "[]")))
+        print(json.loads(request.POST.get('mouseLogs',"[]")))
+        print(request.__dict__)
+        #Also save raw logs as well.
+
+        if request.POST.get('un', "") == 'dave':
+            return redirect('success')
     return render(request, 'interface/login.html')
 
 def sorry(request):

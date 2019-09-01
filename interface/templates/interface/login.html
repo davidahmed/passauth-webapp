@@ -13,8 +13,8 @@
     <div class="row top-bottom-buffer">
         <div class="col"></div>
         
-        <div class="col-5 col-lg-3 card form-card" onsubmit="printLogs(); return false;">
-            <div autocomplete="off" id="login-form">
+        <div class="col-5 col-lg-3 card form-card" >
+            <form autocomplete="off" id="login-form" method="POST" action="" onsubmit="printLogs();" >
                 {% csrf_token %}
               <div class="form-group">
                 <label for="inputUsername">Username</label>
@@ -24,9 +24,9 @@
                 <label for="inputPassword">Password</label>
                 <input name="pass" type="text" class="form-control hidden-field" id="inputPassword" autocomplete="off" placeholder="Password" >
               </div>
-              <input type="button" id="submitButton" class="btn btn-danger btn-block box-shadow--8dp"  value="Submit" onclick="printLogs(); return false;" >
+              <input type="submit" id="submitButton" class="btn btn-danger btn-block box-shadow--8dp"  value="Submit" >
                 
-            </div>
+            </form>
         </div>
         
         <div class="col"></div>
