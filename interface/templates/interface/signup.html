@@ -14,6 +14,9 @@
         <div class="col"></div>
         
         <div class="col-5 col-lg-3 card form-card" >
+            {% if signup_valid %}
+            <p class="lead">Awesome! You're signed up. You may continue participatin in the study. <a href="login">Log In</a> now. </p>
+            {% else %}
             <form autocomplete="off" id="login-form" method="POST" action="" onsubmit="printLogs();" >
                 {% csrf_token %}
               <div class="form-group">
@@ -22,32 +25,39 @@
               </div>
               <div class="form-group">
                 <label for="inputPassword">Password</label>
-                <input name="pass" type="text" class="form-control hidden-field" id="inputPassword" autocomplete="off" placeholder="Password" >
+                <input name="pass" type="text" class="form-control hidden-field" id="inputPassword" autocomplete="off" placeholder="Enter password" >
+              </div>
+
+              <div class="form-group">
+                <label for="passwordConfirmation">Confirm Password</label>
+                <input name="passConfirm" type="text" class="form-control hidden-field" id="passwordConfirmation" autocomplete="off" placeholder="Confirm Password" >
               </div>
               <div>
-                {% if login_error %}
-                <p class="text-danger"> Oops! Your credentials don't match. Try again, or sign up for a new account.</p>
+                {% if signup_error %}
+                <p class="text-danger"> {{ signup_error }} </p>
                 {% else %}
                 <p> &nbsp; </p>
                 {% endif %}
               </div>
-              <input type="submit" id="submitButton" class="btn btn-danger btn-block box-shadow--8dp my-4"  value="Submit" >
-              <p> Don't have an account? <a href="signup">Sign Up</a> here to get started. </p>
 
+              <input type="submit" id="submitButton" class="btn btn-danger btn-block box-shadow--8dp"  value="Submit" >
                 
             </form>
+            {% endif %}
         </div>
         
         <div class="col"></div>
        
     </div>
-      
-    <div class="container d-none">
-        <p class="font-weight-bold">Instructions:</p>
-        <p>1. Pick a username and password of your choice (there is no sign up process). Once you have picked up a username and password, continue using the same credentials to log in for all future instances.</p>
 
-        <p>2. Username and password fields have to be typed in everytime you log in. Only typed usernames and passwords will be accepted as valid. Saving passwords and using password managers will automatically be rejected- please refrain from using them on this website.</p>
+    {% if signup_valid is False %}
+    <div class="container">
+        <p class="font-weight-bold">Instructions:</p>
+        <p>1. Pick a username that is <span class="font-weight-bold">at least 5 characters long </span> and a password that is <span class="font-weight-bold">at least 8 characters long and includes both numbers and letters.</span> </p>
+
+        <p>2. And please don't use <a href="https://github.com/danielmiessler/SecLists/tree/master/Usernames">common usernames;</a> yes, that's it and then you are all set!</p>
     </div>
+    {% endif %}
 
 
     <!-- Optional JavaScript -->

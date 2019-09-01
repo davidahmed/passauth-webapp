@@ -36,8 +36,32 @@ def login(request):
         #Also save raw logs as well.
 
         if users.user_exists(request.POST.get('un', "")):
-            return redirect('success')
+            return redirect('choices')
+        else:
+            return render(request, 'interface/login.html', {'login_error':True})
     return render(request, 'interface/login.html')
+
+@csrf_exempt
+def signup(request):
+    if request.POST:
+        username = request.POST.get('un', '')
+        password = request.POST.get('pass', '')
+        passwordConfirm = request.POST.get('passConfirm', '')
+
+        if not (len(username) and len(password) and len(passwordConfirm)):
+            return render(request, 'interface/signup.html', {'signup_error': "Come on! you can't leave a field blank"})
+        if not password == passwordConfirm:
+            return render(request, 'interface/signup.html', {'signup_error': "Passwords don't match"})
+        if users.user_exists(request.POST.get('un', "")):
+            return render(request, 'interface/signup.html', {'signup_error':'Someone already took that username'})
+        else:
+            validation = users.validate_signup(username, password)
+            if validation[0] == False:
+                return render(request, 'interface/signup.html', {'signup_error':validation[1]})
+            else:
+                return render(request, 'interface/signup.html', {'signup_valid': True})
+
+    return render(request, 'interface/signup.html')
 
 def sorry(request):
     template = loader.get_template('interface/sorry.html')

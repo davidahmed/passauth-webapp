@@ -1,5 +1,21 @@
 from .db import MongoDBConnection
 
+commonUsernames = ['admin']
+def validate_signup(username, password):
+    if len(username) < 5:
+        return False, "Invalid Username!"
+    if username in commonUsernames:
+        return False, "Username is too common. Maybe be a bit special today?"
+        return False,
+    if len(password) < 8:
+        return False, "Invalid Password!"
+    if not any(char.isdigit() for char in password):
+        return False, "Did you forget to use numbers in your password?"
+    if not any(char.isalpha() for char in password):
+        return False, "Invalid Password!"
+    return True, ""
+
+
 def user_exists(username):
     mongo = MongoDBConnection()
 
