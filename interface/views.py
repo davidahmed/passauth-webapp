@@ -6,6 +6,8 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 
+from bson.binary import Binary
+
 from .db import MongoDBConnection
 from . import users
 
@@ -27,16 +29,24 @@ def consent(request):
 @csrf_exempt
 def login(request):
     if request.POST:
-        print(list(request.POST.items()))
-        print("____LOGS______")
-        print(json.loads(request.POST.get('usernameLogs',"[]")))
-        print(json.loads(request.POST.get('passwordLogs', "[]")))
-        print(json.loads(request.POST.get('mouseLogs',"[]")))
-        print(request.__dict__)
-        #Also save raw logs as well.
+        usernameLogs = json.loads(request.POST.get('usernameLogs',"[]"))
+        passwordLogs = json.loads(request.POST.get('passwordLogs', "[]"))
+        mouseLogs = json.loads(request.POST.get('mouseLogs',"[]"))
 
-        if users.user_exists(request.POST.get('un', "")):
-            return redirect('choices')
+        username = request.POST.get('un', '')
+
+        if users.authenticate(username, request.POST.get('pass',"")):
+            if users.put_user_logs(username, {
+                'u': username,
+                'session': users.get_user_session(username),
+                'usernameLogs': usernameLogs,
+                'passwordLogs': passwordLogs,
+                'mouseLogs': mouseLogs,
+                'headers': request.headers,
+            }):
+                sessionCount = users.get_user_session(username, increment=True)
+
+            return render(request, 'interface/choices.html', {'username': 'dave'})
         else:
             return render(request, 'interface/login.html', {'login_error':True})
     return render(request, 'interface/login.html')

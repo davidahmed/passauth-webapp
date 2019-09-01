@@ -7,7 +7,7 @@ Progress:
 |------|--------|----------|
 |  Frontend - all pages    |  <ul><li>- [x] done</li></ul> | high |  
 |  Frontend - CSS and Desgin    | <ul><li>- [x] done</li></ul> | high |
-|  Frontend - User sign up | <ul><li>- [ ] pending</li></ul> | high | 
+|  Frontend - User sign up | <ul><li>- [x] done</li></ul> | high | 
 |  Frontend - subtask - image selectors-jquery   |  <ul><li>- [ ] pending</li></ul>  | low | 
 | Backend - serve static pages |  <ul><li>- [x] done </li></ul>  | high |
 | Backend - database |  <ul><li>- [x] done </li></ul>  | high |

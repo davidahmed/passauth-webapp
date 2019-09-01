@@ -1,6 +1,11 @@
+import hashlib
 from .db import MongoDBConnection
 
 commonUsernames = ['admin']
+
+def user_md5(username):
+    return hashlib.md5(username.encode('utf-8')).hexdigest()
+
 def validate_signup(username, password):
     if len(username) < 5:
         return False, "Invalid Username!"
@@ -62,7 +67,14 @@ def get_user_session(username, increment=False):
         return db.users.find_one({'u': username}).get('sessions',False)
 
 def put_user_logs(username, logs):
-    pass
+    mongo = MongoDBConnection()
+
+    with mongo:
+        assert user_exists(username), "Fatal: User doesn't even exist"
+        db_collection = mongo.connection['passauth'][user_md5(username)]
+        print(logs)
+        #logs.pop('rawData', None)
+        return db_collection.insert_one(logs).acknowledged
 
 def get_user_logs(username):
     pass
