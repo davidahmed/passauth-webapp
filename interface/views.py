@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.http import HttpResponse
 
-images = ["img/"+str(i)+'.jpg' for i in range(1, 17)]
+images = ["img/"+str(i)+'_tn.jpg' for i in range(1, 17)]
 def index(request):
     template = loader.get_template('interface/index.html')
     return HttpResponse(template.render())
@@ -46,5 +46,7 @@ def success(request):
 
 def choices(request):
     template = loader.get_template('interface/choices.html')
-    print(images)
-    return render(request, 'interface/choices.html', {'images':random.choices(images, k=6)})
+    random.shuffle(images)
+    return render(request, 'interface/choices.html', {'images':images[0:6]})
+
+
