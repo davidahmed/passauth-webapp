@@ -1,5 +1,6 @@
 from collections import OrderedDict
 import json
+import random
 
 from django.shortcuts import redirect, render
 from django.template import loader
@@ -7,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.http import HttpResponse
 
-
+images = ["img/"+str(i)+'.jpg' for i in range(1, 17)]
 def index(request):
     template = loader.get_template('interface/index.html')
     return HttpResponse(template.render())
@@ -45,4 +46,5 @@ def success(request):
 
 def choices(request):
     template = loader.get_template('interface/choices.html')
-    return render(request, 'interface/choices.html', {'images':['img/1.jpg', 'img/2.jpg']})
+    print(images)
+    return render(request, 'interface/choices.html', {'images':random.choices(images, k=6)})
