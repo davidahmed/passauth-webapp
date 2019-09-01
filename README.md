@@ -10,8 +10,8 @@ Progress:
 |  Frontend - subtask - image selectors-jquery   |  <ul><li>- [ ] pending</li></ul>  |  low        | 
 | Backend - serve static pages |  <ul><li>- [x] done </li></ul>  | high |
 | Backend - database |  <ul><li>- [ ] pending</li></ul>  | high |
-| Backend - session management |  <ul><li>- [ ] pending</li></ul>  | high |
-| Backend - session management |  <ul><li>- [ ] pending</li></ul>  | medium |
+| Backend - session management |  <ul><li>- [x] pending</li></ul>  | high |
+| Backend - user management |  <ul><li>- [ ] pending</li></ul>  | medium |
 | Hosting and DNS |  <ul><li>- [ ] pending</li></ul>  | medium |
 | Staging |  <ul><li>- [ ] pending</li></ul>  | medium |
 | Deployment |  <ul><li>- [ ] pending</li></ul>  | medium |
