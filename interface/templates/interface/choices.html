@@ -24,11 +24,11 @@
             </div>
         </div>
         <div class="col col-8 col-lg-7 col-xl-6 pt-3">
-            <p class="font-weight-bold">Please select two pictures of your choice and click 'Submit'</p>
+            <p class="font-weight-bold">Please select/unselect image(s) you like and then click  'Submit'</p>
             <div class="row pt-5">
                 {% for image in images %}
                 <div class="col col-4">
-                    <img src="{% static image %}" class="img-thumbnail py-2 px-2 my-2">
+                    <img src="{% static image %}" class="img-thumbnail mx-2 my-2 thick-border choice-option">
                 </div>
                 {% endfor %}
             </div>

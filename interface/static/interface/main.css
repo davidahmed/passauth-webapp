@@ -65,3 +65,7 @@ p {
    -webkit-text-security: circle; /* Chrome/Safari  */
 
 }
+
+.thick-border{
+   border: 0.5rem solid #007BFF;
+}

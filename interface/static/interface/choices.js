@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $("#btnFetch").click(function() {
       // disable button
       $(this).prop("disabled", true);
@@ -10,4 +11,17 @@ $(document).ready(function() {
         },1000);
        
     });
+
+    $(document).on('click', ".choice-option", function(){
+    console.log("hi")
+    if ($(this).hasClass('thick-border')){
+    $(this).removeClass('thick-border');
+    }
+    else{
+    $(this).addClass('thick-border');
+    }
+    });
+
 });
+
+
