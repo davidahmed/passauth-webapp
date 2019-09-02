@@ -9,13 +9,16 @@
         </div>
     </div>
       
-    <div class="container-fluid pl-5">
+    <div class="container-fluid pl-5 col-sm-10">
+        {% if is_mobile %}
+        <p class="lead">Sorry your browser is not supported. Please use a laptop or a desktop computer.</p>
+        {% else %}
          
         <p>Welcome to our homepage! Here are instructions and policies that you <span class="font-weight-bold">MUST</span> familiarize yourself before participating in the study.</p>
 
         <p class="font-weight-bold">A. INSTRUCTIONS:</p>
 
-        <p>1. Once you click on Log In (link button displayed at the bottom of the page), the study will ask you to choose a username and a password. There is no sign up, however, it is your responsibility as a participant to make sure that you pick a username and password and stick to it. Your sessions are tied to your username and you can not reset your password at anytime. In case you lose any of this information, please start again.</p>
+        <p>1. Once you click on Log In (once you accept the concept form on the next page), the study will ask you to choose a username and a password. There is no sign up, however, it is your responsibility as a participant to make sure that you pick a username and password and stick to it. Your sessions are tied to your username and you can not reset your password at anytime. In case you lose any of this information, please start again.</p>
 
         <p>2. During the study, we will collect the information related to your keyboard and mouse behavior ONLY. We will not store your username, password or your choice in the application. Additionally, as a participant, throughout and after the study, your identity will be completely anonymous.</p>
 
@@ -36,12 +39,14 @@
         <p class="font-weight-bold">C. HELP/CONTACTS:</p>
 
         <p>At any point during the study, you may reach out to us at <span class="font-weight-bold">david.ahmad@nyu.edu</span> or <span class="font-weight-bold">christina.poepper@nyu.edu</span> for any information, support, or clarifications regarding this study.</p>
-        
+        {% endif %}
     </div>
-    
+    {% if is_mobile %}
+    {% else %}
     <div class="container-fluid pr-5">
         <a class="btn btn-primary float-right bg-custom" href="consent">Continue</a>
     </div>
+    {% endif %}
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

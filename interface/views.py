@@ -14,7 +14,18 @@ from . import users
 from django.http import HttpResponse
 
 images = ["img/"+str(i)+'_tn.jpg' for i in range(1, 17)]
+
+def is_mobile(request):
+    if request.user_agent.is_mobile or \
+        request.user_agent.is_tablet or \
+        request.user_agent.is_touch_capable:
+        return True
+    return False
+
 def index(request):
+    if is_mobile(request):
+        return render(request, 'interface/index.html', {'is_mobile': True})
+
     template = loader.get_template('interface/index.html')
     return HttpResponse(template.render())
 
@@ -29,6 +40,8 @@ def consent(request):
 
 @csrf_exempt
 def login(request):
+    if is_mobile(request):
+        return redirect('/')
     if request.POST:
         usernameLogs = json.loads(request.POST.get('usernameLogs',"[]"))
         passwordLogs = json.loads(request.POST.get('passwordLogs', "[]"))
@@ -90,7 +103,6 @@ def success(request):
     return HttpResponse(template.render())
 
 def choices(request):
-    template = loader.get_template('interface/choices.html')
     random.shuffle(images)
     return render(request, 'interface/choices.html', {'images':images[0:6]})
 
