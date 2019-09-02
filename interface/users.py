@@ -1,7 +1,19 @@
 import hashlib
 from .db import MongoDBConnection
 
-commonUsernames = ['admin']
+
+commonUsernames = '111111 123456 12345678 abc123 abramov account accounting admin administrator\
+                    adver advert advertising afanasev agafonov agata aksenov aleksander aleksandrov\
+                     alekse alenka alexe alexeev alla anatol andre andreev andrey anna anya ao \
+                     aozt arhipov art avdeev avto bank baranov Baseball belousov bill billing blinov\
+                      bobrov bogdanov buh buhg buhgalter buhgalteria business bux catchthismail company\
+                       contact contactus corp design dir director direktor dragon economist edu email\
+                        er expert export fabrika fin finance ftp glavbuh glavbux glbuh helloitmenice\
+                         help holding home hr iamjustsendingthisleter info ingthisleter job john kadry\
+                          letmein mail manager marketing marketing mike mogggnomgon monkey moscow mysql\
+                           office ok oracle password personal petgord34truew post postmaster pr qwerty\
+                            rbury reklama root root sale sales secretar sekretar support test testing\
+                             thisisjusttestletter trade uploader user webmaster www-data ad'.split(' ')
 
 def user_md5(username):
     return hashlib.md5(username.encode('utf-8')).hexdigest()
@@ -18,6 +30,8 @@ def validate_signup(username, password):
         return False, "Did you forget to use numbers in your password?"
     if not any(char.isalpha() for char in password):
         return False, "Invalid Password!"
+    if user_exists(username):
+        return False, "User already exists! Try a new username."
     return True, ""
 
 
