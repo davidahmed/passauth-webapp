@@ -5,7 +5,7 @@
 
     <div class="container-fluid text-center">
         <div class="jumbotron jumbotron-fluid">
-            <p class="h1">PassAuth</p>
+            <a href="/"><p class="h1">PassAuth</p></a>
             <p class="small text-light custom-header-font">Making authentication more usable</p>
         </div>
     </div>
@@ -50,14 +50,13 @@
        
     </div>
 
-    {% if signup_valid is False %}
-    <div class="container">
+
+    <div class="container card">
         <p class="font-weight-bold">Instructions:</p>
         <p>1. Pick a username that is <span class="font-weight-bold">at least 5 characters long </span> and a password that is <span class="font-weight-bold">at least 8 characters long and includes both numbers and letters.</span> </p>
 
         <p>2. And please don't use <a href="https://github.com/danielmiessler/SecLists/tree/master/Usernames">common usernames;</a> yes, that's it and then you are all set!</p>
     </div>
-    {% endif %}
 
 
     <!-- Optional JavaScript -->

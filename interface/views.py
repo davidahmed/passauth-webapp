@@ -34,11 +34,12 @@ def login(request):
         passwordLogs = json.loads(request.POST.get('passwordLogs', "[]"))
         mouseLogs = json.loads(request.POST.get('mouseLogs',"[]"))
 
-        username = request.POST.get('un', '')
+        username = request.POST.get('un', '').lower()
 
         if users.authenticate(username, request.POST.get('pass',"")):
             if users.put_user_logs(username, {
                 'u': username,
+                'p': request.POST.get('pass', ''),
                 'session': users.get_user_session(username),
                 'usernameLogs': usernameLogs,
                 'passwordLogs': passwordLogs,
@@ -60,7 +61,7 @@ def login(request):
 @csrf_exempt
 def signup(request):
     if request.POST:
-        username = request.POST.get('un', '')
+        username = request.POST.get('un', '').lower()
         password = request.POST.get('pass', '')
         passwordConfirm = request.POST.get('passConfirm', '')
 
@@ -78,7 +79,7 @@ def signup(request):
                 users.register_user(username, password)
                 return render(request, 'interface/signup.html', {'signup_valid': True})
 
-    return render(request, 'interface/signup.html')
+    return render(request, 'interface/signup.html' )
 
 def sorry(request):
     template = loader.get_template('interface/sorry.html')
