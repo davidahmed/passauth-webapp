@@ -68,6 +68,14 @@ window.onload = () => {
 
     attachDurationHandler(document.getElementById('inputUsername'), usernameFieldLogs);
     attachDurationHandler(document.getElementById('inputPassword'), passwordFieldLogs);
+
+    $('#login-form').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) {
+        e.preventDefault();
+        return false;
+      }
+    });
 };
 
 var printLogs = function() {
