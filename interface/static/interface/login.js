@@ -45,7 +45,7 @@ function attachDurationHandler(element, arr){
 
         if (!(e.which in totalTime)) totalTime[e.which] = 0;
         totalTime[e.which] += duration;
-        console.log('Key ' + e.which + ' pressed for ' + duration);
+        //console.log('Key ' + e.which + ' pressed for ' + duration);
         arr.push({'code': e.which, 'timestamp': pressed[e.which], 'duration': duration})
         delete pressed[e.which];
     };
@@ -69,6 +69,10 @@ window.onload = () => {
     attachDurationHandler(document.getElementById('inputUsername'), usernameFieldLogs);
     attachDurationHandler(document.getElementById('inputPassword'), passwordFieldLogs);
 
+    $('#submitButton').click(function(){
+        $('#login-form').append($("<input>").attr("type", "hidden").attr("name","clicked").val("true"));
+    });
+
     $('#login-form').on('keyup keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) {
@@ -81,23 +85,9 @@ window.onload = () => {
 var printLogs = function() {
     var username = document.getElementById('inputUsername').value;
     var pass = document.getElementById('inputPassword').value;
-    console.log(username);
-    console.log(pass);
-    console.log(mouseMovements);
-    console.log(usernameFieldLogs);
-    console.log(passwordFieldLogs);
 
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","usernameLogs").val(JSON.stringify(usernameFieldLogs)));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","passwordLogs").val(JSON.stringify(passwordFieldLogs)));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","mouseLogs").val(JSON.stringify(mouseMovements)));
 
-    /*
-    $.ajax({
-        type:"POST",
-        url:"login",
-        data:{"username": 'dave'},
-        success: function(){
-        console.log("Posted successfully");}
-        })
-    */
 };

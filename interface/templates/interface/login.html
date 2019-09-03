@@ -25,7 +25,9 @@
                 <input name="pass" type="text" class="form-control hidden-field" id="inputPassword" autocomplete="off" placeholder="Password" >
               </div>
               <div>
-                {% if login_error %}
+                {% if not_clicked %}
+                <p class="text-danger"> Oops! Seems like your browser is saving/ autofilling the username and password. Please disable that functionality and manually type your username and password.</p>
+                {% elif login_error %}
                 <p class="text-danger"> Oops! Your credentials don't match. Try again, or sign up for a new account.</p>
                 {% else %}
                 <p> &nbsp; </p>

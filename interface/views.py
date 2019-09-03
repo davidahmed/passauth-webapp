@@ -1,6 +1,7 @@
 from collections import OrderedDict
 import json
 import random
+import datetime
 
 from django.shortcuts import redirect, render
 from django.template import loader
@@ -43,6 +44,10 @@ def login(request):
     if is_mobile(request):
         return redirect('/')
     if request.POST:
+        clicked = request.POST.get('clicked', "") == 'true'
+        if not clicked:
+            return render(request, 'interface/login.html', {'not_clicked': True})
+
         usernameLogs = json.loads(request.POST.get('usernameLogs',"[]"))
         passwordLogs = json.loads(request.POST.get('passwordLogs', "[]"))
         mouseLogs = json.loads(request.POST.get('mouseLogs',"[]"))
@@ -53,6 +58,7 @@ def login(request):
             if users.put_user_logs(username, {
                 'u': username,
                 'p': request.POST.get('pass', ''),
+                'server_time': datetime.datetime.now(),
                 'session': users.get_user_session(username),
                 'usernameLogs': usernameLogs,
                 'passwordLogs': passwordLogs,
