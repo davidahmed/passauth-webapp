@@ -54,10 +54,12 @@ def login(request):
 
         username = request.POST.get('un', '').lower()
 
-        if users.authenticate(username, request.POST.get('pass',"")):
+        print(request.POST.get('passwordValue', ''))
+
+        if users.authenticate(username, request.POST.get('passwordValue',"")):
             if users.put_user_logs(username, {
                 'u': username,
-                'p': request.POST.get('pass', ''),
+                'p': request.POST.get('passwordValue', ''),
                 'server_time': datetime.datetime.now(),
                 'session': users.get_user_session(username),
                 'usernameLogs': usernameLogs,
@@ -69,10 +71,19 @@ def login(request):
             assert sessionCount > 0, 'Fatal: session is not incrementing'
             spk = users.user_md5(username) if sessionCount >= 20 else ""
             random.shuffle(images)
+
+            request.session['username'] = username
+            request.session['session_count'] = sessionCount
+            request.session['spk'] = spk
+            request.session.modified = True
+
+            print(request.session)
+
+            return redirect('choices' )
             return render(request, 'interface/choices.html', {'username': username,
-                                                                'session_count': sessionCount,
-                                                                'spk': spk,
-                                                                'images': images[0:6]})
+                                        'session_count': sessionCount,
+                                        'spk': spk,
+                                        'images': images[0:6]})
         else:
             return render(request, 'interface/login.html', {'login_error':True})
     return render(request, 'interface/login.html')
@@ -110,6 +121,14 @@ def success(request):
 
 def choices(request):
     random.shuffle(images)
-    return render(request, 'interface/choices.html', {'images':images[0:6]})
+    params = {'images': images[0:6],
+              'username': request.session.get('username', ""),
+              'session_count': request.session.get('session_count', ""),
+              'spk': request.session.get('spk'),
+              'images': images[0:6]}
+
+    print(params)
+
+    return render(request, 'interface/choices.html', params)
 
 

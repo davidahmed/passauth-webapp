@@ -58,6 +58,18 @@ var passwordFieldLogs;
 var usernameField;
 var passwordField;
 var printLogs;
+var passwordValue="";
+
+function asterikify() {
+  var x = document.getElementById("inputPassword").value;
+  passwordValue += x.replace(/\*/g,"");
+  document.getElementById("inputPassword").value = "";
+  for (var i=0;i<x.length;i++)
+  {
+    document.getElementById("inputPassword").value += "*";
+  }
+}
+
 
 window.onload = () => {
     mouseMovements = new Array();
@@ -80,12 +92,19 @@ window.onload = () => {
         return false;
       }
     });
+
+    $('#inputPassword').keyup(asterikify);
+
+    $('#login-form').submit(function(e){
+        printLogs();
+        e.preventDefault();
+        this.submit();
+        $('input[name=passwordValue]').remove();
+    });
 };
 
 var printLogs = function() {
-    var username = document.getElementById('inputUsername').value;
-    var pass = document.getElementById('inputPassword').value;
-
+    $('#login-form').append($("<input>").attr("type","hidden").attr("name","passwordValue").val(passwordValue));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","usernameLogs").val(JSON.stringify(usernameFieldLogs)));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","passwordLogs").val(JSON.stringify(passwordFieldLogs)));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","mouseLogs").val(JSON.stringify(mouseMovements)));
