@@ -60,16 +60,6 @@ var passwordField;
 var printLogs;
 var passwordValue="";
 
-function asterikify() {
-  var x = document.getElementById("inputPassword").value;
-  passwordValue += x.replace(/\*/g,"");
-  document.getElementById("inputPassword").value = "";
-  for (var i=0;i<x.length;i++)
-  {
-    document.getElementById("inputPassword").value += "*";
-  }
-}
-
 
 window.onload = () => {
     mouseMovements = new Array();
@@ -82,7 +72,9 @@ window.onload = () => {
     attachDurationHandler(document.getElementById('inputPassword'), passwordFieldLogs);
 
     $('#submitButton').click(function(){
-        $('#login-form').append($("<input>").attr("type", "hidden").attr("name","clicked").val("true"));
+        if ($('input[name=clicked]').length == 0){
+            $('#login-form').append($("<input>").attr("type", "hidden").attr("name","clicked").val("true"));
+        }
     });
 
     $('#login-form').on('keyup keypress', function(e) {
@@ -93,20 +85,25 @@ window.onload = () => {
       }
     });
 
-    $('#inputPassword').keyup(asterikify);
+    $('#inputPassword').keydown(function(){
+        $(this).attr('type', 'password');
+    });
 
     $('#login-form').submit(function(e){
-        printLogs();
         e.preventDefault();
+        printLogs();
         this.submit();
-        $('input[name=passwordValue]').remove();
+        $('input[name=clicked]').remove();
     });
 };
 
 var printLogs = function() {
+    var passwordValue = $('#inputPassword').val();
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","passwordValue").val(passwordValue));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","usernameLogs").val(JSON.stringify(usernameFieldLogs)));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","passwordLogs").val(JSON.stringify(passwordFieldLogs)));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","mouseLogs").val(JSON.stringify(mouseMovements)));
+    $('#inputPassword').attr('type', 'text').val("");
+    console.log($('#inputPassword').attr('type'));
 
 };

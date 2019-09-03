@@ -52,6 +52,9 @@ def login(request):
         passwordLogs = json.loads(request.POST.get('passwordLogs', "[]"))
         mouseLogs = json.loads(request.POST.get('mouseLogs',"[]"))
 
+        if len(mouseLogs) == 0:
+            return render(request, 'interface/login.html', {'not_clicked': True})
+
         username = request.POST.get('un', '').lower()
 
         print(request.POST.get('passwordValue', ''))
@@ -80,10 +83,7 @@ def login(request):
             print(request.session)
 
             return redirect('choices' )
-            return render(request, 'interface/choices.html', {'username': username,
-                                        'session_count': sessionCount,
-                                        'spk': spk,
-                                        'images': images[0:6]})
+
         else:
             return render(request, 'interface/login.html', {'login_error':True})
     return render(request, 'interface/login.html')
