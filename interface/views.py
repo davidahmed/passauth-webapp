@@ -7,9 +7,6 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 
-from bson.binary import Binary
-
-from .db import MongoDBConnection
 from . import users
 
 from django.http import HttpResponse
@@ -43,23 +40,25 @@ def consent(request):
 def login(request):
     if is_mobile(request):
         return redirect('/')
-    if request.POST:
-        clicked = request.POST.get('clicked', "") == 'true'
-        if not clicked:
-            return render(request, 'interface/login.html', {'not_clicked': True})
 
+    if request.POST:
         usernameLogs = json.loads(request.POST.get('usernameLogs',"[]"))
         passwordLogs = json.loads(request.POST.get('passwordLogs', "[]"))
-        mouseLogs = json.loads(request.POST.get('mouseLogs',"[]"))
+        mouseLogs = json.loads(request.POST.get('mouseLogs',"[]")),
+        mouseMeta = json.loads(request.POST.get('mouseMeta', "[]")),
 
-        if len(mouseLogs) == 0:
+        if len(mouseLogs) == 0 or len(passwordLogs) == 0:
             return render(request, 'interface/login.html', {'not_clicked': True})
 
         username = request.POST.get('un', '').lower()
+        password = request.POST.get('passwordValue', '')
 
-        print(request.POST.get('passwordValue', ''))
+        if len(usernameLogs) < len(username) or len(passwordLogs) < len(password):
+            return render(request, 'interface/login.html', {'not_clicked': True})
 
-        if users.authenticate(username, request.POST.get('passwordValue',"")):
+        print(username, password)
+
+        if users.authenticate(username, password):
             if users.put_user_logs(username, {
                 'u': username,
                 'p': request.POST.get('passwordValue', ''),
@@ -68,11 +67,12 @@ def login(request):
                 'usernameLogs': usernameLogs,
                 'passwordLogs': passwordLogs,
                 'mouseLogs': mouseLogs,
+                'mouseMeta': mouseMeta,
                 'headers': request.headers,
             }):
                 sessionCount = users.get_user_session(username, increment=True)
             assert sessionCount > 0, 'Fatal: session is not incrementing'
-            spk = users.user_md5(username) if sessionCount >= 20 else ""
+            spk = users.user_md5(username) if sessionCount >= 25 else ""
             random.shuffle(images)
 
             request.session['username'] = username
@@ -127,7 +127,6 @@ def choices(request):
               'spk': request.session.get('spk'),
               'images': images[0:6]}
 
-    print(params)
 
     return render(request, 'interface/choices.html', params)
 

@@ -1,7 +1,16 @@
 "use strict";
+
+var mouseMovements = new Array();
+var usernameFieldLogs;
+var passwordFieldLogs;
+var mouseMeta;
+
+var usernameField;
+var passwordField;
+var printLogs;
+var passwordValue="";
+
 document.onmousemove = handleMouseMove;
-
-
 
 var hashCode = function(s){
     return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
@@ -51,20 +60,13 @@ function attachDurationHandler(element, arr){
     };
 };
 
-var mouseMovements;
-var usernameFieldLogs;
-var passwordFieldLogs;
 
-var usernameField;
-var passwordField;
-var printLogs;
-var passwordValue="";
 
 
 window.onload = () => {
-    mouseMovements = new Array();
     usernameFieldLogs = new Array();
     passwordFieldLogs = new Array();
+    mouseMeta = new Array();
     usernameField = document.getElementById('inputUsername');
     passwordField = document.getElementById('inputPassword');
 
@@ -76,6 +78,54 @@ window.onload = () => {
             $('#login-form').append($("<input>").attr("type", "hidden").attr("name","clicked").val("true"));
         }
     });
+
+    $('#inputUsername').mousedown(function(e){
+        mouseMeta.push(['mousedown', 'inputUsername', e.pageX, $(this).offset().left, e.pageY, $(this).offset().top, $.now()]);
+        $('#inputUsername').off('mousedown');
+    });
+
+    $('#inputUsername').mouseup(function(e){
+        mouseMeta.push(['mouseup', 'inputUsername', e.pageX, $(this).offset().left, e.pageY, $(this).offset().top, $.now()]);
+        $('#inputUsername').off('mouseup');
+    });
+
+    $('#inputUsername').mouseenter(function(e){
+        mouseMeta.push(['mouseenter', 'inputUsername', e.pageX, $(this).offset().left, e.pageY, $(this).offset().top, $.now()]);
+        $('#inputUsername').off('mouseenter');
+    });
+
+
+    $('#inputPassword').mousedown(function(e){
+        mouseMeta.push(['mousedown', 'inputPassword', e.pageX, $(this).offset().left, e.pageY, $(this).offset().top, $.now()]);
+        $('#inputPassword').off('mousedown');
+    });
+
+    $('#inputPassword').mouseup(function(e){
+        mouseMeta.push(['mouseup', 'inputPassword', e.pageX, $(this).offset().left, e.pageY, $(this).offset().top, $.now()]);
+        $('#inputPassword').off('mouseup');
+    });
+
+    $('#inputPassword').mouseenter(function(e){
+        mouseMeta.push(['mouseenter', 'inputPassword', e.pageX, $(this).offset().left, e.pageY, $(this).offset().top, $.now()]);
+        $('#inputPassword').off('mouseenter');
+    });
+
+    $('#submitButton').mousedown(function(e){
+        mouseMeta.push(['mousedown', 'submitButton', e.pageX, $(this).offset().left, e.pageY, $(this).offset().top, $.now()]);
+        $('#submitButton').off('mousedown');
+    });
+
+    $('#submitButton').mouseup(function(e){
+        mouseMeta.push(['mouseup', 'submitButton', e.pageX, $(this).offset().left, e.pageY, $(this).offset().top, $.now()]);
+        $('#submitButton').off('mouseup');
+    });
+
+    $('#submitButton').mouseenter(function(e){
+        mouseMeta.push(['mouseenter', 'submitButton', e.pageX, $(this).offset().left, e.pageY, $(this).offset().top, $.now()]);
+        $('#submitButton').off('mouseenter');
+    });
+
+
 
     $('#login-form').on('keyup keypress', function(e) {
       var keyCode = e.keyCode || e.which;
@@ -103,7 +153,18 @@ var printLogs = function() {
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","usernameLogs").val(JSON.stringify(usernameFieldLogs)));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","passwordLogs").val(JSON.stringify(passwordFieldLogs)));
     $('#login-form').append($("<input>").attr("type","hidden").attr("name","mouseLogs").val(JSON.stringify(mouseMovements)));
+    $('#login-form').append($("<input>").attr("type","hidden").attr("name","mouseMeta").val(JSON.stringify(mouseMeta)));
+
     $('#inputPassword').attr('type', 'text').val("");
-    console.log($('#inputPassword').attr('type'));
+
+};
+
+var signUp = function() {
+    var passwordValue = $('#inputPassword').val();
+    $('#login-form').append($("<input>").attr("type","hidden").attr("name","passwordValue").val(passwordValue));
+    $('#login-form').append($("<input>").attr("type","hidden").attr("name","usernameLogs").val(JSON.stringify(usernameFieldLogs)));
+    $('#login-form').append($("<input>").attr("type","hidden").attr("name","passwordLogs").val(JSON.stringify(passwordFieldLogs)));
+    $('#login-form').append($("<input>").attr("type","hidden").attr("name","mouseLogs").val(JSON.stringify(mouseMovements)));
+    $('#inputPassword').attr('type', 'text').val("");
 
 };
