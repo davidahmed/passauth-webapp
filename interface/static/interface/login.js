@@ -133,6 +133,7 @@ window.onload = () => {
         e.preventDefault();
         return false;
       }
+
     });
 
     $('#inputPassword').keydown(function(){
@@ -145,6 +146,8 @@ window.onload = () => {
         this.submit();
         $('input[name=clicked]').remove();
     });
+
+
 };
 
 var printLogs = function() {

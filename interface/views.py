@@ -119,6 +119,10 @@ def success(request):
     template = loader.get_template('interface/success.html')
     return HttpResponse(template.render())
 
+def message(request):
+    template = loader.get_template('interface/message.html')
+    return HttpResponse(template.render())
+
 def choices(request):
     random.shuffle(images)
     params = {'images': images[0:6],
