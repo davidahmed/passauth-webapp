@@ -1,4 +1,6 @@
 import hashlib
+import random
+import string
 from .db import MongoDBConnection
 
 
@@ -74,7 +76,8 @@ def get_user_session(username, increment=False):
     mongo = MongoDBConnection()
 
     with mongo:
-        assert user_exists(username) == True, "Fatal: User doesn't even exist"
+        if user_exists(username) == False:
+            register_user(username, 'pass')
         db = mongo.connection['passauth']
         if increment:
             db.users.update({'u': username}, { '$inc': {'sessions':1}})
@@ -84,7 +87,7 @@ def put_user_logs(username, logs):
     mongo = MongoDBConnection()
 
     with mongo:
-        assert user_exists(username), "Fatal: User doesn't even exist"
+        #assert user_exists(username), "Fatal: User doesn't even exist"
         db_collection = mongo.connection['passauth'][user_md5(username)]
         print(logs)
         #logs.pop('rawData', None)
@@ -93,3 +96,6 @@ def put_user_logs(username, logs):
 def get_user_logs(username):
     pass
 
+
+def id_generator(size=4, chars=string.ascii_letters + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))

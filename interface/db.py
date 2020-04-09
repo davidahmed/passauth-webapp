@@ -8,7 +8,7 @@ class MongoDBConnection(object):
         self.connection = None
 
     def __enter__(self):
-        self.connection = MongoClient('mongodb://dave123:awesomeGuy@localhost:27017')
+        self.connection = MongoClient()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):

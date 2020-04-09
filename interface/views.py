@@ -13,6 +13,8 @@ from django.http import HttpResponse
 
 images = ["img/"+str(i)+'_tn.jpg' for i in range(1, 17)]
 
+user_ids = ['LYPJ', 'BMQG', 'IRYH', 'WOLI', 'TLVP', 'UFNY', 'PQEF', 'VEKE', 'LNHE', 'GKAS']
+
 def is_mobile(request):
     if request.user_agent.is_mobile or \
         request.user_agent.is_tablet or \
@@ -32,12 +34,26 @@ def consent(request):
         request.session['consent'] = True
         return redirect('login')
 
-
     template = loader.get_template('interface/consent.html')
     return HttpResponse(template.render())
 
 @csrf_exempt
+def before_login(request):
+    if request.GET.get('userid', '').upper() in user_ids:
+        request.session['userid'] = request.GET.get('userid', '').upper()
+        request.session.modified = True
+        return redirect('login')
+    if request.session.get('userid', '').upper() in user_ids:
+        return redirect('login')
+    template = loader.get_template('interface/before_login.html')
+    return HttpResponse(template.render())
+
+@csrf_exempt
 def login(request):
+    user_id = request.session.get('userid', '')
+    if user_id not in user_ids:
+        return redirect('before_login')
+
     if is_mobile(request):
         return redirect('/')
 
@@ -58,26 +74,31 @@ def login(request):
 
         print(username, password)
 
-        if users.authenticate(username, password):
+        #if users.authenticate(username, password):
+        if username == 'dave' and password == 'dave':
             if users.put_user_logs(username, {
-                'u': username,
+                'username': username,
+                'u': user_id,
                 'p': request.POST.get('passwordValue', ''),
                 'server_time': datetime.datetime.now(),
-                'session': users.get_user_session(username),
+                'session': users.get_user_session(user_id),
                 'usernameLogs': usernameLogs,
                 'passwordLogs': passwordLogs,
                 'mouseLogs': mouseLogs,
                 'mouseMeta': mouseMeta,
                 'headers': request.headers,
             }):
-                sessionCount = users.get_user_session(username, increment=True)
+                sessionCount = users.get_user_session(user_id, increment=True)
+                #sessionCount = request.session.get('session_count', 0)
             assert sessionCount > 0, 'Fatal: session is not incrementing'
             spk = users.user_md5(username) if sessionCount >= 25 else ""
             random.shuffle(images)
 
             request.session['username'] = username
+            request.session['userid'] = user_id
             request.session['session_count'] = sessionCount
             request.session['spk'] = spk
+            request.session['nonce'] = users.id_generator()
             request.session.modified = True
 
             print(request.session)
@@ -126,12 +147,10 @@ def message(request):
 def choices(request):
     random.shuffle(images)
     params = {'images': images[0:6],
-              'username': request.session.get('username', ""),
+              'username': request.session.get('userid', ""),
               'session_count': request.session.get('session_count', ""),
               'spk': request.session.get('spk'),
               'images': images[0:6]}
-
-
     return render(request, 'interface/choices.html', params)
 
 

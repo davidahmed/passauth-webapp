@@ -18,23 +18,24 @@
                 {% csrf_token %}
               <div class="form-group">
                 <label for="inputUsername">Username</label>
-                <input type="text" name="un" class="form-control" id="inputUsername" autocomplete="off" placeholder="Enter username" >
+                <input required type="text" name="un" class="form-control" id="inputUsername" autocomplete="off" placeholder="Enter username" >
               </div>
               <div class="form-group">
                 <label for="inputPassword">Password</label>
-                <input name="pass" type="text" class="form-control hidden-field" id="inputPassword" autocomplete="off" placeholder="Password" >
+                <input required name="pass" type="text" class="form-control hidden-field" id="inputPassword" autocomplete="off" placeholder="Password" >
               </div>
               <div>
                 {% if not_clicked %}
                 <p class="text-danger"> Oops! Seems like your browser is saving/ autofilling the username and password or has a touch-screen functionality. Please disable that functionality and manually type your username and password.</p>
                 {% elif login_error %}
-                <p class="text-danger"> Oops! Your credentials don't match. Try again, or sign up for a new account.</p>
+                <p class="text-danger"> Oops! Your credentials don't match. Please re-check the credentials you were given.</p>
+                {% elif incorrect_id %}
+                <p class="text-danger"> Oops! The ID you entered is not valid.</p>
                 {% else %}
                 <p> &nbsp; </p>
                 {% endif %}
               </div>
               <input type="submit" id="submitButton" class="btn btn-danger btn-block box-shadow--8dp my-4"  value="Login" >
-              <p> Don't have an account? <a href="signup">Sign Up</a> here to get started. </p>
 
                 
             </form>
