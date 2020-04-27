@@ -13,7 +13,22 @@ from django.http import HttpResponse
 
 images = ["img/"+str(i)+'_tn.jpg' for i in range(1, 17)]
 
-user_ids = ['LYPJ', 'BMQG', 'IRYH', 'WOLI', 'TLVP', 'UFNY', 'PQEF', 'VEKE', 'LNHE', 'GKAS']
+user_ids = ['JAZZ', #raluca
+            'ROLL', #prashant
+            'COZY', #alia-DONE
+            'CZAR', #metha-DONE
+            'COOL', #himal-DONE
+            'SKY', #manas-DONE
+            'KITE', #arunw
+            'ANY', #ala
+            'PERL', #arun
+            'PEARL', #mathy
+            'SLACK', #noora
+            'MOON', #nian-DONE
+            'NOON', #lab
+            'BOSS', #Elza-DONE
+            'TURING' #aman-DONE
+            ]
 
 def is_mobile(request):
     if request.user_agent.is_mobile or \
@@ -75,7 +90,7 @@ def login(request):
         print(username, password)
 
         #if users.authenticate(username, password):
-        if username == 'dave' and password == 'dave':
+        if username.lower() == 'mfa-star' and password == '.tie5Roanl':
             if users.put_user_logs(username, {
                 'username': username,
                 'u': user_id,

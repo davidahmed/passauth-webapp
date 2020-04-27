@@ -26,7 +26,7 @@
               </div>
               <div>
                 {% if not_clicked %}
-                <p class="text-danger"> Oops! Seems like your browser is saving/ autofilling the username and password or has a touch-screen functionality. Please disable that functionality and manually type your username and password.</p>
+                <p class="text-danger"> Oops! Seems like your browser is saving/ autofilling the username and password or has a touch-screen functionality. PLEASE disable that functionality and MANUALLY TYPE your username and password.</p>
                 {% elif login_error %}
                 <p class="text-danger"> Oops! Your credentials don't match. Please re-check the credentials you were given.</p>
                 {% elif incorrect_id %}
@@ -35,14 +35,21 @@
                 <p> &nbsp; </p>
                 {% endif %}
               </div>
+              <p>HINT- Username: <span class="font-weight-bold font-italic">mfa-star</span> and Password: <span class="font-weight-bold font-italic">.tie5Roanl</span> </p>
+              <p> Please do not save your username and password if prompted by your browser.</p>
               <input type="submit" id="submitButton" class="btn btn-danger btn-block box-shadow--8dp my-4"  value="Login" >
 
                 
             </form>
+            
         </div>
         
         <div class="col"></div>
        
+    </div>
+    <div class="container d-flex flex-column justify-content-center bg-info text-white">
+      <p> Please make sure to not copy and paste the username and password. Instead manually type them and then click 'Login'.</p>
+
     </div>
       
     <div class="container d-none">
